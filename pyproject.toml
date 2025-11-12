@@ -66,10 +66,10 @@ packages = ["llm_one_api"]
 llm_one_api = ["config/*.yaml"]
 
 [project.entry-points."llm_one_api.auth"]
-simple = "llm_one_api.plugins.builtin.simple_auth:SimpleAuthPlugin"
+default_auth = "llm_one_api.plugins.builtin.default_auth:DefaultAuthPlugin"
 
 [project.entry-points."llm_one_api.model_route"]
-config = "llm_one_api.plugins.builtin.config_router:ConfigRouterPlugin"
+default_router = "llm_one_api.plugins.builtin.default_router:DefaultRouterPlugin"
 
 [project.entry-points."llm_one_api.stats"]
 log = "llm_one_api.plugins.builtin.log_stats:LogStatsPlugin"

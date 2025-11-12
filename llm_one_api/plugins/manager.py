@@ -52,7 +52,7 @@ class PluginManager:
     
     async def _load_auth_plugin(self):
         """加载认证插件"""
-        plugin_name = self.settings.plugins.get("auth", "simple")
+        plugin_name = self.settings.plugins.get("auth", "default_auth")
         
         try:
             # 通过 entry_points 查找插件
@@ -77,15 +77,15 @@ class PluginManager:
         except Exception as e:
             logger.error(f"❌ 加载认证插件失败: {e}")
             # 使用默认插件
-            await self._load_builtin_auth_plugin("simple")
+            await self._load_builtin_auth_plugin("default_auth")
     
     async def _load_builtin_auth_plugin(self, plugin_name: str):
         """加载内置认证插件"""
         try:
-            if plugin_name == "simple":
-                from llm_one_api.plugins.builtin.simple_auth import SimpleAuthPlugin
-                config = self.settings.auth.get("simple", {})
-                self.auth_plugin = SimpleAuthPlugin(config)
+            if plugin_name == "default_auth":
+                from llm_one_api.plugins.builtin.default_auth import DefaultAuthPlugin
+                config = self.settings.auth.get("default_auth", {})
+                self.auth_plugin = DefaultAuthPlugin(config)
                 await self.auth_plugin.initialize()
                 logger.info(f"✅ 内置认证插件加载成功: {plugin_name}")
         except Exception as e:
@@ -93,7 +93,7 @@ class PluginManager:
     
     async def _load_model_route_plugin(self):
         """加载模型路由插件"""
-        plugin_name = self.settings.plugins.get("model_route", "config")
+        plugin_name = self.settings.plugins.get("model_route", "default_router")
         
         try:
             # 通过 entry_points 查找插件
@@ -117,13 +117,13 @@ class PluginManager:
         
         except Exception as e:
             logger.error(f"❌ 加载模型路由插件失败: {e}")
-            await self._load_builtin_model_route_plugin("config")
+            await self._load_builtin_model_route_plugin("default_router")
     
     async def _load_builtin_model_route_plugin(self, plugin_name: str):
         """加载内置模型路由插件"""
         try:
-            if plugin_name == "config":
-                from llm_one_api.plugins.builtin.config_router import ConfigRouterPlugin
+            if plugin_name == "default_router":
+                from llm_one_api.plugins.builtin.default_router import DefaultRouterPlugin
                 config = self.settings.models
                 logger.debug(f"模型配置内容: {config}")
                 
@@ -131,7 +131,7 @@ class PluginManager:
                     logger.error("❌ 模型配置为空！请检查配置文件中的 models 字段")
                     return
                 
-                self.model_route_plugin = ConfigRouterPlugin(config)
+                self.model_route_plugin = DefaultRouterPlugin(config)
                 await self.model_route_plugin.initialize()
                 logger.info(f"✅ 内置模型路由插件加载成功: {plugin_name}")
         except Exception as e:

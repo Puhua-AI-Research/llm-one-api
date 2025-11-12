@@ -1,5 +1,5 @@
 """
-配置文件路由插件
+默认路由插件
 
 从配置文件读取模型路由信息
 """
@@ -12,13 +12,13 @@ from llm_one_api.utils.logger import setup_logger
 logger = setup_logger(__name__)
 
 
-class ConfigRouterPlugin(ModelRoutePlugin):
-    """配置文件路由插件"""
+class DefaultRouterPlugin(ModelRoutePlugin):
+    """默认路由插件"""
     
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.models = config  # config 就是 models 配置
-        logger.info(f"配置文件路由插件初始化，共 {len(self.models)} 个模型")
+        logger.info(f"默认路由插件初始化，共 {len(self.models)} 个模型")
     
     async def get_model_config(self, model_name: str) -> Optional[ModelConfig]:
         """
@@ -143,4 +143,5 @@ class ConfigRouterPlugin(ModelRoutePlugin):
     async def cleanup(self):
         """清理插件"""
         pass
+
 

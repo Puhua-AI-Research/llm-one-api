@@ -7,12 +7,12 @@ server:
   log_level: "warning"
 
 plugins:
-  auth: "simple"
-  model_route: "config"
+  auth: "default_auth"
+  model_route: "default_router"
   stats: ["log"]
 
 auth:
-  simple:
+  default_auth:
     api_keys:
       - "sk-prod-key-1"
       - "sk-prod-key-2"

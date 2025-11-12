@@ -29,8 +29,8 @@ class Settings(BaseSettings):
     # 插件配置
     plugins: Dict[str, Any] = Field(
         default_factory=lambda: {
-            "auth": "simple",
-            "model_route": "config",
+            "auth": "default_auth",
+            "model_route": "default_router",
             "stats": ["log"],
         },
         description="插件配置"
@@ -39,7 +39,7 @@ class Settings(BaseSettings):
     # 认证配置
     auth: Dict[str, Any] = Field(
         default_factory=lambda: {
-            "simple": {
+            "default_auth": {
                 "api_keys": ["sk-test-key"]
             }
         },

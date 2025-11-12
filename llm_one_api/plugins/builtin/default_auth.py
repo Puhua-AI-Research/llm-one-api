@@ -1,5 +1,5 @@
 """
-简单认证插件
+默认认证插件
 
 基于配置文件的 API Key 列表进行认证
 """
@@ -12,13 +12,13 @@ from llm_one_api.utils.logger import setup_logger
 logger = setup_logger(__name__)
 
 
-class SimpleAuthPlugin(AuthPlugin):
-    """简单认证插件"""
+class DefaultAuthPlugin(AuthPlugin):
+    """默认认证插件"""
     
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.api_keys = set(config.get("api_keys", []))
-        logger.info(f"简单认证插件初始化，共 {len(self.api_keys)} 个 API Key")
+        logger.info(f"默认认证插件初始化，共 {len(self.api_keys)} 个 API Key")
     
     async def authenticate(self, api_key: str) -> AuthResult:
         """
@@ -58,4 +58,5 @@ class SimpleAuthPlugin(AuthPlugin):
     async def cleanup(self):
         """清理插件"""
         pass
+
 

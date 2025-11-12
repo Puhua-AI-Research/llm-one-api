@@ -9,13 +9,13 @@ server:
 
 # 插件配置
 plugins:
-  auth: "simple"              # 认证插件：simple
-  model_route: "config"       # 模型路由插件：config
+  auth: "default_auth"              # 认证插件：default_auth
+  model_route: "default_router"       # 模型路由插件：default_router
   stats: ["log"]              # 统计插件：log, memory
 
 # 认证配置
 auth:
-  simple:
+  default_auth:
     api_keys:
       - "sk-test-key-1"
       - "sk-test-key-2"

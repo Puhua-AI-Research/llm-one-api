@@ -1,7 +1,7 @@
 # 负载均衡配置示例
 
 auth:
-  simple:
+  default_auth:
     api_keys:
       - "sk-prod-key-1"
 
@@ -96,8 +96,8 @@ models:
     timeout: 30
 
 plugins:
-  auth: "simple"
-  model_route: "config"
+  auth: "default_auth"
+  model_route: "default_router"
   stats: ["log"]
 
 rate_limit:

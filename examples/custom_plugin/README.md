@@ -133,7 +133,7 @@ class RedisStatsPlugin(StatsPlugin):
 ## 更多示例
 
 查看项目的内置插件实现：
-- `llm_one_api/plugins/builtin/simple_auth.py`
-- `llm_one_api/plugins/builtin/config_router.py`
+- `llm_one_api/plugins/builtin/default_auth.py`
+- `llm_one_api/plugins/builtin/default_router.py`
 - `llm_one_api/plugins/builtin/log_stats.py`
 

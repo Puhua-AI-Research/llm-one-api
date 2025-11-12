@@ -27,8 +27,8 @@ models:
     timeout: 60
 
 plugins:
-  auth: "simple"
-  model_route: "config"
+  auth: "default_auth"
+  model_route: "default_router"
   stats: ["log"]
 ```
 

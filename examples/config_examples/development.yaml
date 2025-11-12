@@ -7,12 +7,12 @@ server:
   log_level: "debug"
 
 plugins:
-  auth: "simple"
-  model_route: "config"
+  auth: "default_auth"
+  model_route: "default_router"
   stats: ["log", "memory"]
 
 auth:
-  simple:
+  default_auth:
     api_keys:
       - "sk-dev-test-key"
 
@@ -21,6 +21,11 @@ models:
     api_base: "https://api.openai.com/v1"
     api_key: "sk-dev-key"
     timeout: 60
+
+    metadata:
+      max_tokens: 4096
+      max_input_tokens: 3072
+      max_output_tokens: 1024
 
 rate_limit:
   enabled: false
