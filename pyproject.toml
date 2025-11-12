@@ -60,7 +60,7 @@ Issues = "https://github.com/yourusername/llm-one-api/issues"
 llm-one-api = "llm_one_api.run_server:main"
 
 [tool.setuptools]
-packages = ["llm_one_api"]
+packages = { find = { where = ["."], exclude = ["tests*", "examples*", "docs*", "scripts*"] } }
 
 [tool.setuptools.package-data]
 llm_one_api = ["config/*.yaml"]
