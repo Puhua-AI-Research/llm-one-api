@@ -1,0 +1,24 @@
+# 包含配置文件
+include llm_one_api/config/*.yaml
+include llm_one_api/config/*.yml
+
+# 包含文档
+include README.md
+include LICENSE
+include DESIGN.md
+include PROJECT_STRUCTURE.md
+include functions.MD
+
+# 排除不需要的文件
+global-exclude __pycache__
+global-exclude *.py[cod]
+global-exclude *$py.class
+global-exclude *.so
+global-exclude .DS_Store
+
+# 排除测试和示例
+prune tests
+prune examples
+prune docs
+prune scripts
+

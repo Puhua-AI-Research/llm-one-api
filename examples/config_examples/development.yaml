@@ -1,0 +1,27 @@
+# 开发环境配置示例
+
+server:
+  host: "127.0.0.1"
+  port: 8000
+  workers: 1
+  log_level: "debug"
+
+plugins:
+  auth: "simple"
+  model_route: "config"
+  stats: ["log", "memory"]
+
+auth:
+  simple:
+    api_keys:
+      - "sk-dev-test-key"
+
+models:
+  gpt-3.5-turbo:
+    api_base: "https://api.openai.com/v1"
+    api_key: "sk-dev-key"
+    timeout: 60
+
+rate_limit:
+  enabled: false
+

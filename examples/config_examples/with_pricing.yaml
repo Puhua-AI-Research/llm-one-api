@@ -1,0 +1,110 @@
+# 带价格和限制信息的配置示例
+
+server:
+  host: "0.0.0.0"
+  port: 8000
+  workers: 4
+  log_level: "info"
+
+plugins:
+  auth: "simple"
+  model_route: "config"
+  stats: ["log", "memory"]
+
+auth:
+  simple:
+    api_keys:
+      - "your-api-key-here"
+
+stats:
+  log:
+    format: "text"  # 使用 text 格式会显示成本信息
+  memory:
+    max_records: 1000
+
+models:
+  # 方式1：直接在模型配置下写（推荐，简洁）
+  # 系统会自动将这些可选字段放入 metadata
+  gpt-3.5-turbo:
+    api_base: "https://api.openai.com/v1"
+    api_key: "your-openai-api-key"
+    adapter: "openai"
+    timeout: 30
+    max_retries: 3
+    
+    # 模型限制（可选）
+    max_tokens: 4096  # 模型最大 token 数
+    max_input_tokens: 3072  # 最大输入 token
+    max_output_tokens: 1024  # 最大输出 token
+    
+    # 价格信息（可选，美元/1K tokens，2024年价格）
+    price_per_1k_prompt_tokens: 0.0015  # $0.0015 / 1K 输入 tokens
+    price_per_1k_completion_tokens: 0.002  # $0.002 / 1K 输出 tokens
+  
+  # 方式2：显式放在 metadata 中（灵活，可以添加任何自定义字段）
+  gpt-4:
+    api_base: "https://api.openai.com/v1"
+    api_key: "your-openai-api-key"
+    adapter: "openai"
+    
+    # 使用 metadata 统一管理所有可选信息
+    metadata:
+      # 模型限制
+      max_tokens: 8192
+      max_input_tokens: 6144
+      max_output_tokens: 2048
+      
+      # 价格信息（GPT-4 更贵）
+      price_per_1k_prompt_tokens: 0.03  # $0.03 / 1K 输入 tokens
+      price_per_1k_completion_tokens: 0.06  # $0.06 / 1K 输出 tokens
+      
+      # 自定义字段（metadata 可以放任何信息）
+      model_version: "gpt-4-0613"
+      provider: "OpenAI"
+      description: "最强大的 GPT-4 模型"
+  
+  # GPT-4 Turbo - 性价比高的 GPT-4
+  gpt-4-turbo-preview:
+    api_base: "https://api.openai.com/v1"
+    api_key: "your-openai-api-key"
+    adapter: "openai"
+    
+    # 模型限制
+    max_tokens: 128000
+    max_input_tokens: 120000
+    max_output_tokens: 4096
+    
+    # 价格信息（比 GPT-4 便宜）
+    price_per_1k_prompt_tokens: 0.01  # $0.01 / 1K 输入 tokens
+    price_per_1k_completion_tokens: 0.03  # $0.03 / 1K 输出 tokens
+  
+  # Claude 3 Sonnet
+  claude-3-sonnet:
+    api_base: "https://api.anthropic.com/v1"
+    api_key: "your-anthropic-api-key"
+    adapter: "anthropic"
+    
+    # 模型限制
+    max_tokens: 200000
+    max_input_tokens: 180000
+    max_output_tokens: 4096
+    
+    # 价格信息（Anthropic 价格）
+    price_per_1k_prompt_tokens: 0.003  # $0.003 / 1K 输入 tokens
+    price_per_1k_completion_tokens: 0.015  # $0.015 / 1K 输出 tokens
+
+rate_limit:
+  enabled: true
+  default_limit: "100/minute"
+  by_user: true
+
+# 备注：
+# 1. 两种配置方式都支持：
+#    - 方式1（推荐）：直接写在模型配置下，简洁明了
+#    - 方式2：显式放在 metadata 中，更灵活，可添加自定义字段
+# 2. 所有可选字段都会被自动放入 metadata 中统一管理
+# 3. 价格信息会用于计算每次请求的成本
+# 4. 成本信息会在日志中显示，格式：💰成本=$0.000123
+# 5. 在服务关闭时，会显示总成本统计
+# 6. 模型限制信息用于提示和验证
+

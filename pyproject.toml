@@ -1,0 +1,110 @@
+[build-system]
+requires = ["setuptools>=65.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "llm-one-api"
+version = "0.1.0"
+description = "统一的大模型中转服务，兼容 OpenAI API"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "LLM One API Team", email = "dev@example.com"}
+]
+keywords = ["llm", "openai", "api", "proxy", "middleware"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+dependencies = [
+    "fastapi>=0.104.0",
+    "uvicorn[standard]>=0.24.0",
+    "httpx>=0.25.0",
+    "pydantic>=2.0.0",
+    "pydantic-settings>=2.0.0",
+    "PyYAML>=6.0",
+    "fire>=0.5.0",
+    "tiktoken>=0.5.0",
+    "python-multipart>=0.0.6",
+    "loguru==0.7.2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "isort>=5.12.0",
+    "flake8>=6.0.0",
+    "mypy>=1.0.0",
+    "httpx-sse>=0.3.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/llm-one-api"
+Documentation = "https://github.com/yourusername/llm-one-api#readme"
+Repository = "https://github.com/yourusername/llm-one-api"
+Issues = "https://github.com/yourusername/llm-one-api/issues"
+
+[project.scripts]
+llm-one-api = "llm_one_api.run_server:main"
+
+[tool.setuptools]
+packages = ["llm_one_api"]
+
+[tool.setuptools.package-data]
+llm_one_api = ["config/*.yaml"]
+
+[project.entry-points."llm_one_api.auth"]
+simple = "llm_one_api.plugins.builtin.simple_auth:SimpleAuthPlugin"
+
+[project.entry-points."llm_one_api.model_route"]
+config = "llm_one_api.plugins.builtin.config_router:ConfigRouterPlugin"
+
+[project.entry-points."llm_one_api.stats"]
+log = "llm_one_api.plugins.builtin.log_stats:LogStatsPlugin"
+memory = "llm_one_api.plugins.builtin.memory_stats:MemoryStatsPlugin"
+
+[tool.black]
+line-length = 100
+target-version = ['py38', 'py39', 'py310', 'py311']
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 100
+skip_gitignore = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --cov=llm_one_api --cov-report=term-missing"
+asyncio_mode = "auto"
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+ignore_missing_imports = true
+

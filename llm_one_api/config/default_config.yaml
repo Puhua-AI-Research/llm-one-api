@@ -1,0 +1,66 @@
+# LLM One API 默认配置文件
+
+# 服务器配置
+server:
+  host: "0.0.0.0"
+  port: 8000
+  workers: 4
+  log_level: "info"
+
+# 插件配置
+plugins:
+  auth: "simple"              # 认证插件：simple
+  model_route: "config"       # 模型路由插件：config
+  stats: ["log"]              # 统计插件：log, memory
+
+# 认证配置
+auth:
+  simple:
+    api_keys:
+      - "sk-test-key-1"
+      - "sk-test-key-2"
+
+# 模型配置
+models:
+  # OpenAI 模型
+  gpt-3.5-turbo:
+    api_base: "https://api.openai.com/v1"
+    api_key: "your-openai-api-key"
+    timeout: 60
+    adapter: "openai"
+    owned_by: "openai"
+  
+  gpt-4:
+    api_base: "https://api.openai.com/v1"
+    api_key: "your-openai-api-key"
+    timeout: 120
+    adapter: "openai"
+    owned_by: "openai"
+  
+  # 可以添加其他模型提供商
+  # claude-3-opus:
+  #   api_base: "https://api.anthropic.com/v1"
+  #   api_key: "your-anthropic-api-key"
+  #   timeout: 120
+  #   adapter: "anthropic"
+  #   owned_by: "anthropic"
+
+# 统计配置
+stats:
+  log:
+    format: "json"  # json 或 text
+  
+  memory:
+    max_records: 1000
+
+# 限流配置
+rate_limit:
+  enabled: false
+  requests_per_minute: 60
+
+# 日志配置
+logging:
+  format: "json"
+  file: "logs/llm-one-api.log"
+  rotate: "daily"
+
