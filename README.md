@@ -11,7 +11,6 @@
 |------|------|
 | 🔌 **OpenAI 兼容** | 完全兼容 OpenAI API 格式，无缝切换 |
 | ⚖️ **负载均衡** | 多上游服务器，自动故障转移，支持权重分配 |
-| 💰 **成本计算** | 自动统计 Token 使用和成本 |
 | 🔐 **认证系统** | 灵活的 API Key 管理 |
 | 🔌 **插件化** | 易于扩展的插件系统 |
 | 🚀 **高性能** | 基于 FastAPI，支持异步和流式响应 |
@@ -85,8 +84,7 @@ curl http://localhost:8000/v1/chat/completions \
 |------|------|
 | [快速开始](docs/QUICKSTART.md) | 5分钟快速上手指南 |
 | [负载均衡](docs/LOAD_BALANCING.md) | 配置多上游服务器和负载均衡 |
-| [成本统计](docs/STATISTICS.md) | Token 使用和成本统计 |
-| [价格配置](docs/MODEL_PRICING.md) | 配置模型价格，自动计算成本 |
+| [限流配置](docs/RATE_LIMITING.md) | API 限流配置和使用 |
 | [配置示例](examples/config_examples/) | 各种场景的配置示例 |
 | [插件开发](examples/custom_plugin/) | 开发自定义插件 |
 
@@ -114,22 +112,15 @@ models:
     load_balance_strategy: "weighted"  # 支持: weighted, round_robin, random
 ```
 
-### 成本统计
+### 限流配置
 
 ```yaml
-models:
-  gpt-3.5-turbo:
-    api_base: "https://api.openai.com/v1"
-    api_key: "sk-xxx"
-    max_tokens: 4096
-    price_per_1k_prompt_tokens: 0.0015   # 输入价格
-    price_per_1k_completion_tokens: 0.002  # 输出价格
+rate_limit:
+  enabled: true
+  requests_per_minute: 60  # 每分钟60次请求
 ```
 
-日志会自动显示成本：
-```
-📊 响应统计 | 模型=gpt-3.5-turbo | 输入Token=100 | 输出Token=50 | 💰成本=$0.000250
-```
+防止 API 滥用，保护服务稳定性。详见 [限流文档](docs/RATE_LIMITING.md)
 
 ## 🔌 插件开发
 

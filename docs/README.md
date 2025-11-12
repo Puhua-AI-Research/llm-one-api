@@ -9,15 +9,13 @@
 
 ### ⚙️ 功能配置
 - **[负载均衡](LOAD_BALANCING.md)** - 配置多个上游服务器，实现负载均衡和故障转移
-- **[统计功能](STATISTICS.md)** - Token 使用统计和请求日志
-- **[价格配置](MODEL_PRICING.md)** - 配置模型价格，自动计算成本
+- **[限流配置](RATE_LIMITING.md)** - 防止 API 滥用，保护服务稳定性
 
 ### 📋 配置示例
 - **[配置示例](../examples/config_examples/)** - 各种场景的完整配置示例
   - `development.yaml` - 开发环境配置
   - `production.yaml` - 生产环境配置
   - `load_balance.yaml` - 负载均衡配置
-  - `with_pricing.yaml` - 带价格的配置
 
 ### 🔌 扩展开发
 - **[插件开发](../examples/custom_plugin/)** - 开发自定义认证、路由和统计插件
@@ -28,8 +26,7 @@
 |------|---------|
 | 我想快速试用 | [快速开始](QUICKSTART.md) |
 | 我想配置多个上游服务器 | [负载均衡](LOAD_BALANCING.md) |
-| 我想统计 Token 使用 | [统计功能](STATISTICS.md) |
-| 我想计算 API 成本 | [价格配置](MODEL_PRICING.md) |
+| 我想限制 API 调用频率 | [限流配置](RATE_LIMITING.md) |
 | 我想开发自定义插件 | [插件开发](../examples/custom_plugin/) |
 
 ## 📖 文档说明
